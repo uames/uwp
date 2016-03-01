@@ -215,7 +215,7 @@ function twentyfourteen_font_url() {
 			'family' => urlencode( 'Lato:300,400,700,900,300italic,400italic,700italic' ),
 			'subset' => urlencode( 'latin,latin-ext' ),
 		);
-		$font_url = add_query_arg( $query_args, 'https://fonts.googleapis.com/css' );
+		//$font_url = add_query_arg( $query_args, 'https://fonts.googleapis.com/css' );
 	}
 
 	return $font_url;
@@ -517,3 +517,13 @@ require get_template_directory() . '/inc/customizer.php';
 if ( ! class_exists( 'Featured_Content' ) && 'plugins.php' !== $GLOBALS['pagenow'] ) {
 	require get_template_directory() . '/inc/featured-content.php';
 }
+if (!function_exists('remove_wp_open_sans')) :
+function remove_wp_open_sans() {
+	wp_deregister_style( 'open-sans' );
+	wp_register_style( 'open-sans', false );
+}
+add_action('wp_enqueue_scripts', 'remove_wp_open_sans');
+
+// Uncomment below to remove from admin
+// add_action('admin_enqueue_scripts', 'remove_wp_open_sans');
+endif;
